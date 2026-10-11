@@ -1,0 +1,26 @@
+[package]
+name = "utopia-circuit-breaker"
+description = "Circuit breakers judged on a rolling failure rate, with half-open probes, state shared through Redis or an in-process table, and telemetry."
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.88"
+license = "BSD-3-Clause"
+
+[features]
+default = ["redis"]
+# Breaker state shared through Redis.
+redis = ["dep:redis"]
+
+[dependencies]
+hex = "0.4"
+php-std = { version = "0.1.0", git = "https://github.com/utopia-rs/php-std" }
+redis = { version = "0.32", optional = true, default-features = false, features = ["tokio-comp", "aio", "connection-manager", "script"] }
+sha1 = "0.10"
+thiserror = "2"
+utopia-telemetry = { version = "0.1.0", git = "https://github.com/utopia-rs/telemetry", default-features = false }
+
+[dev-dependencies]
+tokio = { version = "1", features = ["rt-multi-thread", "macros", "net", "time", "sync", "signal", "rt"] }
+
+[package.metadata.utopia]
+php-sync = "809d2819d7da00d8b2f486e3bcb4c98a5265e950"
